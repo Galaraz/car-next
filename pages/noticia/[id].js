@@ -121,4 +121,4 @@ export async function getServerSideProps({req, res, query}){
       }
     }     
 }
-const nextConfig = { experimental: { runtime: 'edge'} };
+export const config = { runtime: 'experimental-edge' }

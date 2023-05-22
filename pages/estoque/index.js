@@ -52,4 +52,4 @@ export async function getServerSideProps({req, query}) {
     return {props: { data }}
 }
 
-const nextConfig = { experimental: { runtime: 'edge'} };
+export const config = { runtime: 'experimental-edge' }

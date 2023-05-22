@@ -44,7 +44,7 @@ export default function  Home({data}) {
   )
 }
 
-export async function getStaticProps(){
+export async function getServerSideProps(){
   try {
     let body = JSON.stringify({
       "acoes": 
@@ -81,3 +81,5 @@ export async function getStaticProps(){
     }
   }   
 }
+
+export const config = { runtime: 'experimental-edge' }
