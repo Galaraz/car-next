@@ -1,55 +1,27 @@
-
 import React, { useEffect, useState } from 'react';
 import CardAnuncio from "../cardAnuncio";
-import { lojaId, urlRequisicao } from "../../utils";
+import { lojaId, removerSpecials, urlRequisicao } from "../../utils";
 import styles from './listagemVeiculos.module.scss'
+import Link from "next/link"
+import { Skeleton } from '@mui/material';
 
-export default function ListagemVeiculos({anuncios}) { 
-  const [listaAnuncios, setListaAnuncios] = useState()
-  const [isLoading, setIsLoading] = useState(true)
-  // console.log(anuncios)
-  useEffect(() => {
-    if(!listaAnuncios) getAnuncios()
-  },[])
+export default function ListagemVeiculos({anuncios, loading}) {
 
-  const getAnuncios = async () => {
-    let body = JSON.stringify({
-      "acoes": 
-        [
-          {
-            "acao": anuncios,
-            "params":{"resultados": 20,"marca" : "ASA"}
-          },     
-        ],
-      "loja": lojaId
-    }) 
-
-    const response = await fetch(urlRequisicao,{
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body
-    })
-    
-    let data = await response.json()
-    setListaAnuncios(data[anuncios])
-    setIsLoading(false)
-  }
-
-  if(isLoading) return null
-  return(    
-    listaAnuncios && listaAnuncios.length ? 
+  const listaAnuncios = loading ? Array.from({length: 8}, (v, k) => k) : anuncios
+  return(
+    listaAnuncios ? 
     <div className={styles.listagemAnuncios}>
-        {
-        listaAnuncios.map((anuncio, index) => {
+      {
+        listaAnuncios.map((anuncio) => {
+          if(loading) return <CardAnuncio anuncio={anuncio} loading={loading} key={anuncio}/>
             return(
-            <CardAnuncio key={index} anuncio={anuncio}/>
+              <Link key={anuncio.vei_id} href={`/${removerSpecials(anuncio.mar_nome)}-${removerSpecials(anuncio.vei_modelo)}/${anuncio.vei_id}`} className={styles.anuncios}>                
+                <CardAnuncio anuncio={anuncio} loading={loading}/>
+              </Link>
             )
         })
-        }   
-    </div> 
+      }   
+    </div>
     : <div className={styles.listagemSemAnuncio}>Nenhum anuncio encontrado!</div>
-  ) 
+  )
 }
-
-
-

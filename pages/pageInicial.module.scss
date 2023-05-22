@@ -1,17 +1,14 @@
 .container{
 
     max-width: 1170px;
-
-    
     margin: 0 auto;
-
     padding-bottom: 100px;
 
     position: relative;
 
     .cardContatos{
         margin-top: -50px;
-        margin-bottom: 75px;            
+        // margin-bottom: 75px;            
     }    
 
     .envolveBusca{
@@ -28,15 +25,15 @@
                 display: flex;
                 align-items: flex-end;
                 padding-bottom: 15px;
-            }  
-        } 
+            } 
+        }
 
         .painelAnuncios{
         
             .anunciosDestaque{
 
                 .listagemAnuncios{
-                    background-color: white;
+                    background-color: var(--corBackground);
                     max-width: 1170px;
                     display: flex;
                     gap: 26.5px;
@@ -70,7 +67,7 @@
                 display: flex;
                 align-items: center;
                 color: #fff;
-                background-color: red;
+                background-color: var(--corTema1);
                 border-radius: 12px;
                 padding: 10px 30px;
                 cursor: pointer;
@@ -88,10 +85,8 @@
         .container{
             .cardContatos{
                display: block;
-            }  
-                    
+            }                      
         }
-
     }
     @media (min-width: 995px) and (max-width: 1249px) {
 
@@ -122,8 +117,7 @@
             
             .titulo{
                 font-size: 20px !important;
-                padding-bottom: 15px;
-            
+                padding-bottom: 15px;            
             }
 
             .envolveBusca{
@@ -144,18 +138,15 @@
     @media (max-width:767px) {
 
         .container{
-
-            // margin-top: -100px;
-
             width: 90%;
-            min-width: 300px;
-
+            position: relative;
+            display: block;
+            min-width: 300px;            
             .cardContatos{
                 display: none;
-            }  
+            }
 
-            .envolveBusca{
-
+            .envolveBusca{ 
                 .buscaVeiculos{
                     flex-direction: column;
                     gap: 10px 0;
@@ -188,4 +179,4 @@
 
     }
 
-  }
+}

@@ -4,13 +4,24 @@
     background-size: 10px 10px;
     color: rgb(212, 212, 212);
     text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    position: absolute;
+    bottom: -1px;
+    width: calc(100% - 40px);
 
-    p A{
+    p{
+        width: 95%;
+    }
+
+    p a{
         text-decoration: none;
         color: #CD0018;
     }
 }
 
+@media (max-width:767px) {
+    .container{
+        p{
+            font-size: 10px;
+        }
+    }
+}

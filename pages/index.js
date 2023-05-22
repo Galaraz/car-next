@@ -1,46 +1,50 @@
-
-import React, { useEffect, useState } from 'react'
-import CardAnuncio from "../components/cardAnuncio";
-import { lojaId, urlRequisicao, fetcher } from "../utils";
-import ListagemVeiculos from '../components/listagemVeiculos';
-import {BiSearch} from 'react-icons/bi'
-import Select from 'react-select'
-import styles from './pageInicial.module.scss'
+import React, { useEffect, useState } from 'react';
+import Busca from "../components/busca";
+import { lojaId, urlRequisicao, fetcher, nomeLoja } from "../utils";
+import styles from './pageInicial.module.scss';
 import Noticias from '../components/noticias';
 import CardContato from '../components/cardContato';
-import Inicio from '../components/inicio';
-import Contato from '../components/contato'
-import Estoque from '../components/estoque'
-import Loja from '../components/loja'
-import Pedidos from '../components/pedidos'
-import Menu from '../components/menuTopo';
-import { useRouter } from 'next/router';
+import Head from 'next/head';
 
-export default function  Home({data}) { 
-  const [pageSelecionada, setPageSelecionada] = useState(data.rota || '')
+export default function  Home({data}) {
+  const {destaques, ultimasnoticias, dadosloja} = data
+  const [loadingSelect, setLoadingSelect] = useState(true);
 
-  const pages = {
-    loja: <Loja/>,
-    estoque: <Estoque/>,
-    pedidos: <Pedidos/>,
-    contato: <Contato/>
-  }
+  useEffect(() => {
+    setLoadingSelect(false)
+  }, [])
 
-  function mudarPage(e){
-    setPageSelecionada(e)
-  }
-
-  return (
-    <>
-      <Menu callbackchange={e => mudarPage(e)} rota={pageSelecionada}/>
-      {pages[pageSelecionada] || <Inicio data={data}/>}
+  
+  return(
+    <>          
+      <Head> 
+          <meta property="og:type" content="product" />
+          <meta property="og:description" content="Confira nosso site." />
+          <meta property="og:image" content="/img/compartilhamento.jpg" />
+          <meta property="og:image:width" content="400" />
+          <meta property="og:image:height" content="400" />
+          <title>{nomeLoja}</title>
+      </Head>
+      <div className={styles.container}>
+        <div className={styles.cardContatos}>
+          <CardContato dadosloja={dadosloja}/>
+        </div>
+        <Busca anuncios={destaques} resultados={8} titulo={"Veículos em destaque"} ordenacao={false} />      
+        <div className={styles.cardContatosMobile}>
+          <CardContato dadosloja={dadosloja}/>
+        </div>
+      </div>
+      {    
+        ultimasnoticias ?             
+          <Noticias noticias={ultimasnoticias}/>
+        :
+        null
+      }
     </>
   )
-   
-    
 }
-export async function getServerSideProps({req, res}){
-  let rota = req.url.split('?')[0].replace('/', '')
+
+export async function getStaticProps(){
   try {
     let body = JSON.stringify({
       "acoes": 
@@ -50,15 +54,12 @@ export async function getServerSideProps({req, res}){
           },
           {
             "acao": "destaques",
-            "params":{"resultados": 8 }
+            "params":{"resultados": 8}
           },
           {
             "acao": "ultimasnoticias",
             "params":{"resultados": 7}
-          },
-          {
-            "acao": "marcas",
-          }         
+          }                   
         ],
       "loja": lojaId
     }) 
@@ -68,18 +69,15 @@ export async function getServerSideProps({req, res}){
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body
     })
-    
-    let data = await response.json()
-    data['rota'] = rota.replace('/', '')
+
+    const data = await response.json()
     return {    
-      props: {data }
+      props: {data}
     }
 
   } catch(e) {
     return {
       notFound: true
     }
-  } 
-  
+  }   
 }
-

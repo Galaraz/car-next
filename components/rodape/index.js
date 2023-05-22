@@ -1,14 +1,16 @@
 import styles from "./rodape.module.scss"
 
-const Rodape = () => {   
+function obterAnoAtual() {
+    const dataAtual = new Date();
+    return dataAtual.getFullYear();
+}
+const anoAtual = obterAnoAtual();
 
+const Rodape = () => {      
     return(
-        <div className={styles.container}>
-
-            <p>© 2022 <a href={`https://www.shopcar.com.br/`} target="_blank">SHOPCAR</a> - Sua Referência em Veículos - Classificados de Carros. Todos os direitos reservados.</p>
-            
-
-        </div>
+        <footer className={styles.container}>
+            <p>© {anoAtual} <a href={`https://www.shopcar.com.br/`} target="_blank">SHOPCAR</a> - Sua Referência em Veículos - Classificados de Carros. Todos os direitos reservados.</p>   
+        </footer>
     )
 }
 

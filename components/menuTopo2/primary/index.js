@@ -1,6 +1,6 @@
 import {FaInstagram, FaFacebookSquare} from 'react-icons/fa';
-import {defaultColors, loaderImagensLocal, nomeLoja} from '../../utils';
-import logo from '../../public/img/logo.jpg';
+import {defaultColors, loaderImagensLocal, nomeLoja} from '../../../utils';
+import logo from '../../../public/img/logo.jpg';
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,7 +8,7 @@ import styles from "./menuTopo.module.scss";
 import { useEffect, useState } from 'react';
 
 
-export default function Menu({children}) { 
+export default function Primary() { 
   const router = useRouter()
   const activeRoute = router.pathname
   const [menuAberto, setMenuAberto] = useState(false)
