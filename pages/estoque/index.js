@@ -51,3 +51,4 @@ export async function getServerSideProps({req, query}) {
     const data = await response.json()
     return {props: { data }}
 }
+

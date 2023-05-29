@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-
+  experimental: { runtime: 'edge'}, 
   images: {
     domains : ['https://static-dev.shopcar.com.br'],
     dangerouslyAllowSVG: true,
